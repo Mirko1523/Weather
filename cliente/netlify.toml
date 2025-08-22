@@ -1,0 +1,10 @@
+[build]
+  # El comando que Netlify usará para construir tu sitio.
+  command = "npm run build"
+  
+  # El directorio que Netlify publicará.
+  publish = ".next"
+
+
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
