@@ -3,6 +3,7 @@
 import React, { useState, ChangeEvent, FormEvent } from "react";
 import axios from "axios";
 import Image from "next/image";
+import NavBar from "@/components/navbar";
 
 //definimos los objetos en strings y numbers
 interface WeatherData {
@@ -54,56 +55,66 @@ const Home: React.FC = () => {
     }
   };
 
-  return (
+return (
+  <main className="bg-gray-100 bg-cover bg-center min-h-screen">
+    <NavBar/>
   
-     <main className="bg-gray-100 bg-cover bg-center min-h-screen">
-    {/* Creamos el formulario para buscar las ciudades */}
-    <div className="flex flex-col items-center justify-center ">
-    <form onSubmit={handleSubmit} className=" bg-white p-4">
-      {/* El input con los diferentes estados (type,value,onchange(para el cambio de ciudades)) */}
-      <input
-      type="text"
-      value={city}
-      onChange={handleCityChange}
-      placeholder="Search city..."
-      className="border border-black p-1 rounded-lg mb-2"
-      />
-      
-      {/* Button para la busqueda de la ciudad */}
-      <button type="submit" className="border border-black text-white p-2 rounded-xl cursor-pointer hover:bg-gray-300 ml-2">
-        <Image
-          src="/search.png"
-          alt="Search"
-          width={15}
-          height={15}
-        />
-      </button>
-  
-    {error && (
-      <div className="text-red-500">
-        {error}
-      </div>
-    )
-    }
-      </form>
-    </div>  
-    {weatherData && (
-      <div className="bg-white p-4 rounded-lg shadow-md">
-        <h2 className="text-xl font-bold mb-2">{weatherData.name}, {weatherData.sys.country}</h2>
-         <Image
-          src={`${ICON_BASE_URL}${weatherData.weather[0].icon}@2x.png`}
-          alt={weatherData.weather[0].description}
-          width={100}
-          height={100}
-        />
-        <p className="text-gray-700">Temperature: {weatherData.main.temp}°C</p>
-        <p className="text-gray-700">Feels Like: {weatherData.main.feels_like}°C</p>
-        <p className="text-gray-700">Humidity: {weatherData.main.humidity}%</p>
-        <p className="text-gray-700">Condition: {weatherData.weather[0].description}</p>
-      </div>
-    )}
-  </main>
+    <div className="flex flex-col items-center p-5 min-h-screen">
+    {/* Formulario donde el usuario busca la ciudad */}
+      <form 
+        onSubmit={handleSubmit} 
+        className="bg-white p-4 rounded-xl shadow-lg flex flex-col items-center justify-center"
+      >
+     {/* Input para busqueda de la ciudad integrado con los diferentes eventos */}
+        <div className="flex items-center">
+          <input
+            type="text"
+            value={city}
+            onChange={handleCityChange}
+            placeholder="Search city..."
+            className="border border-gray-300 p-2 rounded-lg"
+          />
+          <button 
+            type="submit" 
+            className="ml-2 bg-white text-white p-2 rounded-full cursor-pointer hover:bg-blue-950"
+          >
+            <Image
+              src="/search.png"
+              alt="Search"
+              width={20}
+              height={20}
+            />
+          </button>
+        </div>
 
+        {error && (
+          <div className="text-red-500 mt-2">
+            {error}
+          </div>
+        )}
+      </form>
+      
+      {weatherData && (
+        <div className="bg-white p-6 rounded-xl shadow-lg mt-8 text-center">
+          <h2 className="text-2xl font-bold mb-2">{weatherData.name}, {weatherData.sys.country}</h2>
+          <Image
+            src={`${ICON_BASE_URL}${weatherData.weather[0].icon}@2x.png`}
+            alt={weatherData.weather[0].description}
+            width={100}
+            height={100}
+          />
+          <p className="text-gray-700">Temperature: {weatherData.main.temp}°C</p>
+          <p className="text-gray-700">Feels Like: {weatherData.main.feels_like}°C</p>
+          <p className="text-gray-700">Humidity: {weatherData.main.humidity}%</p>
+          <p className="text-gray-700">Condition: {weatherData.weather[0].description}</p>
+        </div>
+      )}
+    </div>
+
+    <footer className="bg-gray-950 p-4 text-white text-center">
+      <p>&copy; 2025 Weather App. All rights reserved.</p>
+    </footer>
+  </main>
 );
 }
 
